@@ -1,66 +1,105 @@
-class DialogControl {
-    constructor(selector, soft_close = true) {
-        let dialog_element = document.querySelector("dialog"+selector)
-        if(soft_close) {
-            dialog_element.addEventListener("click", event => {
-                if (event.target === dialog_element) {
-                    dialog_element.close()
-                }
-            })
+{
+    let toasts = Shelf.signals.signal([]),
+        toast_list_element = document.querySelector("ul.toast-list"),
+        toast_queue = [],
+        toast_limit = 5,
+        ispaused = false,
+        pause_time = null,
+        max_wait_time = 20
+
+    let html = Shelf.template.quick
+
+    const toast_notify = message => {
+        if(toasts.value.length === toast_limit)
+            toast_queue.push(message);
+        else {
+            toasts.value.push(message)
+            
+            let message_container = html`<li class="toast-item"></li>`.firstChild
+            let message_content = html`
+                <p>${message}</p>
+                <button class="close-button" [click]=${()=>{
+                    message_container.remove()
+                }}>
+                    X
+                </button>
+            `
+
+            message_container.append(message_content)
+            toast_list_element.append(message_container)
+
+
+            setTimeout(() => {
+                toasts.value.pop()
+                toast_list_element.removeChild(toast_list_element.firstChild)
+
+                if(toast_queue.length > 0) 
+                    notify(toast_queue.shift());
+
+            }, 10000)
         }
-
-        this.element = dialog_element
     }
 
-    open() {
-        this.element.show()
-    }
-    close() {
-        this.element.close()
+    function pauseToastNotifications() {}
+    function unpauseToastNotifications() {}
+
+    function notify(message, criticality = "Low") {
+        toast_notify(message)
     }
 }
 
 {
-    let toast = new DialogControl(".toast-window", false)
-    let toasts = Shelf.signals.signal([])
-    let toast_list_element = document.querySelector("ul.toast-list") 
+    let modal_element = document.querySelector("dialog.modal-window"),
+        content_element = document.querySelector(".modal-content"),
+        visible = false,
+        content_map = new Map()
 
-    function notify(message) {
-        if(toasts.value.length === 0) {
-            toast.open()
+    modal_element.addEventListener("click", event => {
+        if (event.target === modal_element) {
+            modal_element.close()
+        }
+    })
+
+    const addContent = (content) => {
+        let content_uuid = null
+        do {
+            content_uuid = crypto.randomUUID()
+        } while (content_uuid === null || content_map.has(content_uuid))
+        
+        let container = document.createElement("div")
+        container.append(content)
+
+        content_map.set(content_uuid, container.childNodes)
+        return content_uuid
+    }
+
+    const openModal = (content_id) => {
+        if(!content_map.has(content_id)) return;
+        content_element.innerHTML = ""
+
+        let modal_content = content_map.get(content_id)
+        
+        for(let content_node of modal_content) {
+            content_element.append(content_node.cloneNode(true))
         }
 
-        toasts.value.push(message)
-        let current_index = toasts.value.length - 1
-        let message_element = Shelf.template.quick`
-            <li class="toast-item">
-                ${message}
-                <button [click]=${()=>{
-                    message_element.remove()
-                }}>X</button>
-            </li>
-        `
-        toast_list_element.append(message_element)
+        modal_element.show()
+        pauseToastNotifications()
+        visible = true
 
-        setTimeout(() => {
-            toasts.value.pop()
-            toast_list_element.removeChild(toast_list_element.firstChild)
-
-            if(toasts.value.length === 0) {
-                toast.close()
-            }
-        }, 10000)
     }
-    
-    globalThis.notify = notify
+    const closeModal = () => {
+        modal_element.close()
+        unpauseToastNotifications()
+        visible = false
+    }
+    const isOpen = () => visible
+
+    globalThis.modal = {
+        open: openModal,
+        close: closeModal,
+        isOpen,
+        content: addContent
+    }
 }
 
-notify("Hello")
-setTimeout(()=>{
-    notify("Hello Worldsdfsdfsdfsdfsd")
-
-}, 1000)
-setTimeout(()=>{
-
-    notify("Hello You")
-}, 2000)

@@ -78,8 +78,10 @@
 
 .modal-window:is([open]) {
 	background: #11111b75;
-    backdrop-filter: blur(5px);
-    margin: auto;
+    backdrop-filter: blur(2px);
+    margin: 0px;
+    width: 100vw;
+    height: 100vh;
     border: none;
     
     display: flex;
@@ -97,20 +99,16 @@
     background-color: var(--color-base);
 }
 
-.toast-window:is([open]) {
-    padding: 0px;
+.toast-window {
+    padding: 20px;
     margin: 0px;
     border: none;
     
-    display: flex;
-    justify-content: end;
-    align-items: end;
-    width: 100vw;
-    height: 100vh;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
 
-    overscroll-behavior: auto;
-    
-    background-color: rgba(0, 0, 0, 0);
+    background: transparent;
 }
 
 .toast-list {
@@ -121,7 +119,7 @@
     justify-content: end;
     gap: 15px;
     align-items: end;
-    margin: 15px;
+    margin: 0px;
 }
 
 .toast-item {
@@ -135,14 +133,10 @@
     background-color: var(--color-accent-13);
 }
 
-.toast-item button {
+.toast-item button.close-button {
     border: none;
     background-color: rgba(0, 0, 0, 0);
     color: var(--color-crust);
-}
-
-.toast-item:last-child {
-    margin-bottom: 0px;
 }
 
 body {
@@ -150,13 +144,9 @@ body {
     overflow: hidden;
 }
 
-ul {
-    margin: 0px;
-}
-
 main {
     display: grid;
-    grid-template-columns: 25px minmax(0, 400px) 15px 1fr 15px;
+    grid-template-columns: 50px minmax(0, 400px) 15px 1fr 15px;
     grid-template-rows: 
         var(--header-height)
         calc(100vh - (var(--header-height) + var(--footer-height)))
