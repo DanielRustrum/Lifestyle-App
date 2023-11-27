@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DvO</title>
+    <link rel="stylesheet" href="./css/shell.css">
+</head>
+<body>
+    <div class="sr-only"></div>
+
+    <dialog class="modal-window" autofocus>
+        <div class="modal-content"></div>
+    </dialog>
+    
+    <div class="toast-window" aria-hidden="true">
+        <ul class="toast-list"></ul>
+    </div>
+
+
+    <main>
+        <header>
+            <div class="location-info">
+                <h1>Vault Name</h1>
+                <p>Page Name</p>
+            </div>
+            <div class="mode-toggle" data-active-mode="Action">
+                <p>Action Mode</p>
+            </div>
+        </header>
+
+        <div class="icon-sidebar">
+            <div class="icon-group">
+                <ul class="dynamic-group"></ul>
+                <ul class="static-group"></ul>
+            </div>
+        </div>
+        <div class="content-sidebar">
+            <div class="scroll-container" style-scroll-color="Light">
+                sidebar
+                <button id="open-modal">open modal</button>
+                <button id="open-toast">open toast</button>
+                <button id="open-serious-toast">open serious toast</button>
+                <p style="padding: 100vh 0px;">new content</p>
+            </div>
+        </div>
+        <div class="content-sizebar"></div>
+        <div class="content-viewer">
+            <div class="scroll-container" style-scroll-color="Dark">
+                content
+                <p style="padding: 100vh 0px;">new content</p>
+            </div>
+        </div>
+    
+        <div class="containing-bar"></div>
+
+
+        <footer>
+            <div class="data-left-container">
+                <p>Data</p>
+            </div>
+            <div class="data-middle-container">
+                <p>Wow!</p>
+            </div>
+            <div class="data-right-container">
+                <p>Word Count?</p>
+            </div>
+        </footer>
+    </main>
+
+    <script src="./lib/shelf/core.js"></script>
+    <script src="./lib/shelf/signal.js"></script>
+    <script src="./lib/shelf/templates.js"></script>
+
+    <script src="./js/shell.js" ></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>

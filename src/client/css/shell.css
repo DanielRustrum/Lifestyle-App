@@ -30,6 +30,8 @@
     --color-accent-13: #89b4fa;
     --color-accent-14: #b4befe; 
 
+
+
     /* Font Sizes */
     --small-text-size: 12px;
     --medium-text-size: 14px;
@@ -38,11 +40,15 @@
     --medium-header-size: 32px;
     --large-header-size: 45px;
 
-    /* Static Heights */
-    --header-height: 50px;
+    /* UI Sizing */
     --max-modal-width: 500px;
     --max-modal-height: 600px;
-    --footer-height: 15px;
+    
+    --primary-bar-depth: 50px;
+    --bar-depth: 15px;
+    --max-sidebar-width: 400px;
+
+    --snap-padding: 200px;
 }
 
 
@@ -55,6 +61,7 @@
 
 .scroll-container::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
 }
 
 .scroll-container::-webkit-scrollbar-track {
@@ -67,17 +74,18 @@
     background-color: var(--color-crust);   
 }
 
-.scroll-container[data-scroll-color="Light"]::-webkit-scrollbar-track {
+.scroll-container[style-scroll-color="Light"]::-webkit-scrollbar-track {
     background-color: var(--color-base);   
 }
 
-.scroll-container[data-scroll-color="Dark"]::-webkit-scrollbar-track {
+.scroll-container[style-scroll-color="Dark"]::-webkit-scrollbar-track {
     background-color: var(--color-mantle);   
 }
 
 
 .modal-window:is([open]) {
-	background: #11111b75;
+	background: var(--color-crust);
+    opacity: .75;
     backdrop-filter: blur(2px);
     margin: 0px;
     width: 100vw;
@@ -99,16 +107,24 @@
     background-color: var(--color-base);
 }
 
+.modal-content[style-hide-background] {
+    background-color: transparent;
+}
+
 .toast-window {
     padding: 20px;
     margin: 0px;
     border: none;
     
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     right: 0px;
 
     background: transparent;
+}
+
+.hide-toast-window {
+    display: none;
 }
 
 .toast-list {
@@ -128,9 +144,13 @@
     justify-content: end;
     gap: 15px;
     width: fit-content;
-    padding: 15px;
+    padding: 20px;
     border-radius: 15px;
     background-color: var(--color-accent-13);
+}
+.toast-item[style-serious] {
+    background-color: var(--color-accent-5);
+
 }
 
 .toast-item button.close-button {
@@ -139,25 +159,36 @@
     color: var(--color-crust);
 }
 
+.toast-item p.toast-message {
+    margin: 0px;
+}
+
 body {
     margin: 0px;
     overflow: hidden;
+    background-color: var(--color-crust);
 }
 
 main {
     display: grid;
-    grid-template-columns: 50px minmax(0, 400px) 15px 1fr 15px;
+    grid-template-columns: 
+        50px 
+        minmax(0px, var(--max-sidebar-width)) 
+        var(--bar-depth) 
+        1fr 
+        var(--bar-depth);
     grid-template-rows: 
-        var(--header-height)
-        calc(100vh - (var(--header-height) + var(--footer-height)))
-        var(--footer-height);
+        var(--primary-bar-depth)
+        calc(100vh - (var(--primary-bar-depth) + var(--bar-depth)))
+        var(--bar-depth);
     grid-template-areas: 
         "header header header header header"
         "iconbar sidebar sizebar viewer blank"
         "footer footer footer footer footer";
     height: 100vh;
     width: 100vw;
-    color: var(--color-text)
+    color: var(--color-text);
+    background-color: var(--color-crust);
 }
 
 header {
@@ -184,12 +215,14 @@ header {
 
 .location-info > p {
     margin: 0px;
+    font-weight: bold;
     font-size: 18px;
     padding-bottom: 2px;
 }
 
 .mode-toggle {
     margin-right: 20px;
+    cursor: pointer;
 }
 
 .mode-toggle > p {
@@ -200,40 +233,54 @@ header {
 
 .icon-sidebar {
     grid-area: iconbar;
-    background-color: var(--color-crust);
 }
 
 .content-sidebar {
     grid-area: sidebar;
     background-color: var(--color-mantle);
+    border-radius: 10px;
+    padding: 10px;
 }
 
 .content-sizebar {
     grid-area: sizebar;
-    background-color: var(--color-crust);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: var(--color-base);
+    border-style: solid;
+    border: 0px;
+}
+.content-sizebar:hover {
+    cursor: grab;
+}
+
+.content-sizebar > div {
+    width: 1px;
+    border-width: 1px;
 }
 
 .content-viewer {
     grid-area: viewer;
     background-color: var(--color-base);
+    border-radius: 10px;
+    padding: 10px;
+    overflow-x: auto;
 }
 
 .containing-bar {
     grid-area: blank;
-    background-color: var(--color-crust);
 }
 
 
 footer {
     grid-area: footer;
-    background-color: var(--color-crust);
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 20px;
 }
 
-footer > p {
+footer p:not(:empty) {
     margin: 0px;
     font-size: 12px;
-}
-
-.dummy {
-    padding: 100vh 0px;
 }
