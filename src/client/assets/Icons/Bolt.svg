@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.38 50">
+  <defs>
+    <style>
+      .cls-1 {
+        fill-rule: evenodd;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <path id="action-solid-svgrepo-com" class="cls-1" d="m.39,26.42L14.87,1.45c.52-.9,1.48-1.45,2.52-1.45h0c1.61,0,2.92,1.31,2.92,2.92v15.83h11.15c1.61,0,2.92,1.31,2.92,2.92v.46c0,.51-.13,1.01-.39,1.45l-14.35,24.95c-.52.91-1.49,1.46-2.53,1.46h-.13c-1.61,0-2.92-1.31-2.92-2.92v-15.83H2.92c-1.61,0-2.92-1.31-2.92-2.92v-.45c0-.51.14-1.02.39-1.46Zm5.25.14h13.11v14.15l10-17.29h-13.13v-13.98L5.64,26.56Z"/>
+  </g>
+</svg>

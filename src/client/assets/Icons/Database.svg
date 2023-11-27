@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43.75 50">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #020202;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <path id="Icon_awesome-database" data-name="Icon awesome-database" class="cls-1" d="m43.75,7.14v4.46c0,3.93-9.8,7.14-21.87,7.14S0,15.54,0,11.61v-4.46C0,3.21,9.8,0,21.87,0s21.87,3.21,21.87,7.14Zm0,10.04v10.04c0,3.93-9.8,7.14-21.87,7.14S0,31.16,0,27.23v-10.04c4.7,3.24,13.3,4.74,21.87,4.74s17.17-1.5,21.87-4.74h0Zm0,15.62v10.04c0,3.93-9.8,7.14-21.87,7.14S0,46.79,0,42.86v-10.04c4.7,3.24,13.3,4.74,21.87,4.74s17.17-1.5,21.87-4.74h0Z"/>
+  </g>
+</svg>
