@@ -2,7 +2,9 @@ const html = Shelf.template.quick
 
 //TODO: Hotkeys
 
-//* Toasts
+
+
+//* Notifications
 {
     // TODO: General Notification Tracking
     let toasts = [],
@@ -10,7 +12,8 @@ const html = Shelf.template.quick
         toast_queue = [],
         toast_limit = 5, 
         toast_duration = 10000,
-        ispaused = false
+        ispaused = false,
+        notifications = []
 
 
     const toast_notify = (message, criticality) => {
@@ -60,12 +63,20 @@ const html = Shelf.template.quick
         ispaused = false
     }
 
+    function getNotifications() {
+        return Array.from(notifications)
+    }
+
     function notify(message, criticality = "Low") {
         switch(criticality) {
             case "High":
             case "Medium":
                 toast_notify(message, criticality)
             case "Low":
+                notifications.push({
+                    message,
+                    criticality
+                })
                 break
             default:
         }
@@ -226,6 +237,7 @@ function mountContent(parent, content) {
         if(mouse_horizontal_translation < snap_padding) { 
             mouse_horizontal_translation = 0
             sizebar.style["border-left"] = "5px solid var(--color-mantle)"
+
             sidebar.style.display = "none"
         } else if(
             mouse_horizontal_translation > 
@@ -248,6 +260,8 @@ function mountContent(parent, content) {
     })
 }
 
+
+
 //* Modes
 { 
     let mode = "action"
@@ -255,18 +269,71 @@ function mountContent(parent, content) {
     let ContainerElement = document.querySelector(".mode-toggle"),
         TextElement = ContainerElement.querySelector("p")
 
+    const rotateIcons = (value) => {
+        let IconElements = document.querySelectorAll("[style-app-mode]")
+        for(let icon of IconElements) {
+            console.log(icon.getAttribute("style-app-mode"))
+            if(icon.getAttribute("style-app-mode") === value)
+                icon.style.display = "block";
+            else
+               icon.style.display = "none";
+        }
+    }
+
     ContainerElement.addEventListener("click", _ => {
         switch(mode) {
             case "action":
                 mode = "structure"
+                rotateIcons("structure")
                 TextElement.innerText = "Structure Mode"
                 break
             case "structure":
                 mode = "action"
+                rotateIcons("action")
                 TextElement.innerText = "Action Mode"
                 break
         }
     })
 
     function getMode() {return mode}
+}
+
+//* Icons
+{
+    let icon_elements = document.querySelectorAll("icon")
+
+    for (const icon_element of icon_elements) {
+        let icon_label = icon_element.getAttribute("name")
+
+        fetch(`./assets/Icons/${icon_label}.svg`)
+            .then(res => res.text())
+            .then(data => {
+                const parser = new DOMParser();
+                const svg = parser
+                    .parseFromString(data, 'image/svg+xml')
+                    .querySelector('svg');
+
+
+                let attrs = icon_element.getAttributeNames()
+                
+                for (const attr of attrs) {
+                    if(attr === "name")
+                        svg.setAttribute("icon-name", icon_element.getAttribute(attr))
+                    else
+                        svg.setAttribute(attr, icon_element.getAttribute(attr));
+                }
+
+                icon_element.parentNode.replaceChild(svg, icon_element);
+            })
+            .catch(error => console.error(error))
+    }
+
+    function selectIcon(name) {
+        return document.querySelector(`svg[icon-name="${name}"`)
+    }
+}
+
+//* Settings
+{
+    let setting_icon = selectIcon("Gear")
 }

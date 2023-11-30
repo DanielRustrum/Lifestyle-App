@@ -52,6 +52,7 @@
 }
 
 
+
 .scroll-container {
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -111,14 +112,15 @@
     background-color: transparent;
 }
 
+
 .toast-window {
-    padding: 20px;
+    padding: 5px;
     margin: 0px;
     border: none;
     
     position: fixed;
-    bottom: 0px;
-    right: 0px;
+    bottom: 15px;
+    right: 15px;
 
     background: transparent;
 }
@@ -162,6 +164,7 @@
 .toast-item p.toast-message {
     margin: 0px;
 }
+
 
 body {
     margin: 0px;
@@ -220,19 +223,62 @@ header {
     padding-bottom: 2px;
 }
 
+
 .mode-toggle {
     margin-right: 20px;
     cursor: pointer;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: end;
+    gap: 10px;
+    padding: 0px 10px 0px 15px;
+    height: 25px;
+    user-select: none;
 }
 
 .mode-toggle > p {
     margin: 0px;
 }
-
-
+.mode-toggle > svg {
+    height: 20px;
+    padding-bottom: 2px;
+}
+.mode-toggle > svg path{
+    fill: var(--color-text);
+}
 
 .icon-sidebar {
     grid-area: iconbar;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.icon-sidebar > ul {
+    padding: 0px;
+    list-style: none;
+    padding-left: 5px;
+}
+.icon-sidebar > ul > li {
+    padding-bottom: 10px;
+}
+
+
+.icon {
+    max-width: 30px;
+}
+
+.icon path {
+    fill: var(--color-text);
+}
+
+.static-group:last-child {
+    padding-bottom: 0px;
+}
+
+[style-app-mode="structure"] {
+    display: none;
 }
 
 .content-sidebar {
@@ -249,6 +295,7 @@ header {
     align-items: center;
     border-color: var(--color-base);
     border-style: solid;
+    border-radius: 10px;
     border: 0px;
 }
 .content-sizebar:hover {
